@@ -1,0 +1,6 @@
+.service-container{
+    border: 1px solid gray;
+    border-radius: 10px;
+    background-color: rgba(173, 216, 230, 0.226);
+    padding: 10px;
+}
