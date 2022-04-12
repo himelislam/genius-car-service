@@ -55,19 +55,19 @@ const Signup = () => {
         event.preventDefault();
     }
     return (
-        <div className='form-container'>
+        <div className='form2-container'>
             <div>
                 <form onSubmit={handleSignUp}>
                     <h2 className='form-title'>Sign Up</h2>
-                    <div className="input-group">
+                    <div className="input-group1">
                         <label htmlFor="Email">Email</label>
                         <input onBlur={handleEmailInput} type="email" name="" id="" required />
                     </div>
-                    <div className="input-group">
+                    <div className="input-group1">
                         <label htmlFor="password">Password</label>
                         <input onBlur={handlePasswordInput} type="password" name="" id="" required />
                     </div>
-                    <div className="input-group">
+                    <div className="input-group1">
                         <label htmlFor="confirm-password">Confirm Password</label>
                         <input onBlur={handleConfirmPassword} type="password" name="" id="" required />
                     </div>
