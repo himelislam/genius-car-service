@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import './Login.css'
+import SocialLogin from './SocialLogin/SocialLogin';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -15,6 +16,8 @@ const Login = () => {
 
 
     const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+
+    const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
 
     if(user){
         console.log('user found' , user);
@@ -60,6 +63,10 @@ const Login = () => {
                 <p>
                     New to Ema-John? <Link className='form-link' to='/signup'>Create A New Account.</Link>
                 </p>
+                <p>
+                    Forget Password? <Link onClick={async ()=> {await sendPasswordResetEmail(email); alert('sent email')}} className='form-link' to='/signup'>Reset Password</Link>
+                </p>
+                <SocialLogin></SocialLogin>
             </div>
         </div>
     );

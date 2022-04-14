@@ -1,18 +1,29 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth'
+import { Link, useNavigate } from 'react-router-dom';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth'
 import auth from '../../firebase.init';
+import SocialLogin from '../Login/SocialLogin/SocialLogin';
+import { async } from '@firebase/util';
 
 const Signup = () => {
+    const [name, setName]= useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorM, setErrorM] = useState('');
+    const [agree, setAgree] = useState(false);
+
+    const navigate = useNavigate()
+    // const location = 
+
+    // const from = 
 
 
 
-    const [signInWithGoogle] = useSignInWithGoogle(auth);
-    const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
+    // const [signInWithGoogle] = useSignInWithGoogle(auth);
+    const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth, {sendEmailVerification: true});
+
+    const [updateProfile] = useUpdateProfile(auth);
 
     // if(error){
     //     console.log('ajajajaj');
@@ -21,7 +32,13 @@ const Signup = () => {
     // }
 
     if (user) {
+        navigate('/')
         console.log('user Found', user);
+        // navigate(from)
+    }
+
+    const handleNameInput = event => {
+        setName(event.target.value)
     }
 
     const handleEmailInput = event => {
@@ -37,28 +54,35 @@ const Signup = () => {
     }
 
     // handle Create User with Email and Password
-    const handleSignUp = event => {
+    const handleSignUp = async (event) => {
         event.preventDefault();
         if(password !== confirmPassword){
             setErrorM('Your Password Mismatched')
             return;
         }
-        createUserWithEmailAndPassword(email, password)
+        await createUserWithEmailAndPassword(email, password)
+        await updateProfile({displayName:name})
+        console.log('update profile');
+        
         
     }
 
 
 
-    // handle Login With Google
-    const handleGoogleSignIn = event => {
-        signInWithGoogle()
-        event.preventDefault();
-    }
+    // // handle Login With Google
+    // const handleGoogleSignIn = event => {
+    //     signInWithGoogle()
+    //     event.preventDefault();
+    // }
     return (
         <div className='form2-container'>
             <div>
                 <form onSubmit={handleSignUp}>
                     <h2 className='form-title'>Sign Up</h2>
+                    <div className="input-group1">
+                        <label htmlFor="Email">Name</label>
+                        <input onBlur={handleNameInput} type="text" name="" id="" required />
+                    </div>
                     <div className="input-group1">
                         <label htmlFor="Email">Email</label>
                         <input onBlur={handleEmailInput} type="email" name="" id="" required />
@@ -71,21 +95,29 @@ const Signup = () => {
                         <label htmlFor="confirm-password">Confirm Password</label>
                         <input onBlur={handleConfirmPassword} type="password" name="" id="" required />
                     </div>
+                    <div>
+                        <input onClick={()=> setAgree(!agree)} type="checkbox" name="terms" id="terms" />
+                        <label style={
+                            agree?
+                            {color:'blue'}
+                            :
+                            {color: 'red'}
+                        } 
+                    htmlFor="terms" className='ps-2'>Accept Genious Car Terms And Conditions</label>
+                    </div>
                     <p style={{ color: 'red' }}>{error?.message}</p>
                     <p style={{color: 'red'}}>{errorM}</p>
                     {
                         loading && <p>Loading...</p>
                     }
-                    <input className='form-submit' type="submit" value="Sign Up" />
+                    <input disabled={!agree} className='form-submit' type="submit" value="Sign Up" />
                 </form>
 
                 <p>
                     Alreacy Have An Account? <Link className='form-link' to='/login'>Login</Link>
                 </p>
 
-                <div>
-                    <button onClick={handleGoogleSignIn} >Sign in With Google</button>
-                </div>
+                <SocialLogin></SocialLogin>
             </div>
         </div>
     );
