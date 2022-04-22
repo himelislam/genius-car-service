@@ -18,6 +18,8 @@ const Header = () => {
                 <Link to='/'>Home</Link>
                 <Link to='/services'>Services</Link>
                 <Link to='/experts'>Experts</Link>
+                <Link to='/addservice'>Add Service</Link>
+                <Link to='/manage'>Manage Service</Link>
                 <Link to='/about'>About</Link>
                 {user ?
                     <button onClick={() => signOut(auth)}>Sign Out</button>
