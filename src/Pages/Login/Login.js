@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -21,7 +22,7 @@ const Login = () => {
 
     if(user){
         console.log('user found' , user);
-        navigate(from, {replace:true})
+        
     }
 
     // if(error){
@@ -36,9 +37,13 @@ const Login = () => {
     }
 
 
-    const handleLogin = event => {
-        signInWithEmailAndPassword(email, password)
+    const handleLogin = async event => {
         event.preventDefault();
+        await signInWithEmailAndPassword(email, password)
+        const {data} = await axios.post('http://localhost:5000/login', {email})
+        console.log(data);
+        localStorage.setItem('accessToken', data.accessToken)
+        navigate(from, {replace:true})
     }
     return (
         <div className='form2-container'>

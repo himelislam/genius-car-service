@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import './App.css';
 import About from './Pages/About/About';
 import AddService from './Pages/AddService/AddService';
@@ -12,6 +13,8 @@ import Footer from './Pages/Shared/Footer/Footer';
 import Header from './Pages/Shared/Header/Header';
 import Signup from './Pages/Signup/Signup';
 import RequireAuth from './RequireAuth';
+import 'react-toastify/dist/ReactToastify.css';
+import Orders from './Pages/Orders/Orders';
 
 function App() {
   return (
@@ -33,6 +36,11 @@ function App() {
             <ManageServices></ManageServices>
           </RequireAuth>
         }></Route>
+        <Route path='orders' element={
+          <RequireAuth>
+            <Orders></Orders>
+          </RequireAuth>
+        }></Route>
         <Route path='experts' element={<Experts></Experts>}></Route>
         <Route path='about' element={
           <RequireAuth>
@@ -48,6 +56,7 @@ function App() {
         <Route path='signup' element={<Signup></Signup>}></Route>
       </Routes>
       <Footer></Footer>
+      <ToastContainer></ToastContainer>
     </div>
   );
 }

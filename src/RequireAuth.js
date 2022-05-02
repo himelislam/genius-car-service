@@ -20,22 +20,22 @@ const RequireAuth = ({ children }) => {
     // than dropping them off on the home page.
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
-  if (user.providerData[0]?.providerId === 'password' && !user.emailVerified) {
-    return (
-      < div >
-        <h2 className='text-denger'>Your Email is Not varified</h2>
-        <h5 className='text-success'>Please Varifiy Your Email</h5>
-        <button
-          onClick={async () => {
-            await sendEmailVerification();
-            alert('Sent email');
-          }}
-        >
-          Verify email
-        </button>
-      </div >
-    )
-  }
+  // if (user.providerData[0]?.providerId === 'password' && !user.emailVerified) {
+  //   return (
+  //     < div >
+  //       <h2 className='text-denger'>Your Email is Not varified</h2>
+  //       <h5 className='text-success'>Please Varifiy Your Email</h5>
+  //       <button
+  //         onClick={async () => {
+  //           await sendEmailVerification();
+  //           alert('Sent email');
+  //         }}
+  //       >
+  //         Verify email
+  //       </button>
+  //     </div >
+  //   )
+  // }
   return children;
 };
 

@@ -15,12 +15,13 @@ const Header = () => {
     return (
         <>
             <div>
-                <Link to='/'>Home</Link>
-                <Link to='/services'>Services</Link>
-                <Link to='/experts'>Experts</Link>
-                <Link to='/addservice'>Add Service</Link>
-                <Link to='/manage'>Manage Service</Link>
-                <Link to='/about'>About</Link>
+                <Link className='ms-3 text-decoration-none text-dark me-2' to='/'>Home</Link>
+                <Link className='ms-3 text-decoration-none text-dark me-2' to='/services'>Services</Link>
+                <Link className='ms-3 text-decoration-none text-dark me-2' to='/experts'>Experts</Link>
+                <Link className='ms-3 text-decoration-none text-dark me-2' to='/addservice'>Add Service</Link>
+                <Link className='ms-3 text-decoration-none text-dark me-2' to='/manage'>Manage Service</Link>
+                <Link className='ms-3 text-decoration-none text-dark me-2' to='/orders'>Orders</Link>
+                <Link className='ms-3 text-decoration-none text-dark me-2' to='/about'>About</Link>
                 {user ?
                     <button onClick={() => signOut(auth)}>Sign Out</button>
                     :
