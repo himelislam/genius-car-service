@@ -1,13 +1,17 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSignInWithGoogle, useSignInWithGithub} from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
+import useToken from '../../../hooks/useToken';
 
 const SocialLogin = () => {
     const [signInWithGoogle, user1, loading1, error1] = useSignInWithGoogle(auth);
     const [signInWithGithub, user2, loading2, error2] = useSignInWithGithub(auth);
+    const [token] = useToken(user1 || user2);
     let errorElement;
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || '/';
     if(user2){
         console.log(user2);
     }
@@ -15,8 +19,8 @@ const SocialLogin = () => {
         console.log(user1);
     }
 
-    if(user1 || user2){
-        navigate('/home')
+    if(token){
+        navigate(from, {replace:true}) 
     }
 
     if(error1 || error2){

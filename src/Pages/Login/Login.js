@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
+import useToken from '../../hooks/useToken';
 import './Login.css'
 import SocialLogin from './SocialLogin/SocialLogin';
 
@@ -20,9 +21,10 @@ const Login = () => {
 
     const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
 
-    if(user){
-        console.log('user found' , user);
-        
+    const [token] = useToken(user);
+
+    if(token){
+        navigate(from, {replace:true})  
     }
 
     // if(error){
@@ -40,10 +42,9 @@ const Login = () => {
     const handleLogin = async event => {
         event.preventDefault();
         await signInWithEmailAndPassword(email, password)
-        const {data} = await axios.post('http://localhost:5000/login', {email})
-        console.log(data);
-        localStorage.setItem('accessToken', data.accessToken)
-        navigate(from, {replace:true})
+        // const {data} = await axios.post('https://infinite-cliffs-56801.herokuapp.com/login', {email})
+        // localStorage.setItem('accessToken', data.accessToken)
+       
     }
     return (
         <div className='form2-container'>

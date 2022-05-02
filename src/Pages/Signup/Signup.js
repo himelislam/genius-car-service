@@ -4,6 +4,7 @@ import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfil
 import auth from '../../firebase.init';
 import SocialLogin from '../Login/SocialLogin/SocialLogin';
 import { async } from '@firebase/util';
+import useToken from '../../hooks/useToken';
 
 const Signup = () => {
     const [name, setName]= useState('');
@@ -24,6 +25,7 @@ const Signup = () => {
     const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth, {sendEmailVerification: true});
 
     const [updateProfile] = useUpdateProfile(auth);
+    const [token] = useToken(user)
 
     // if(error){
     //     console.log('ajajajaj');
@@ -31,7 +33,7 @@ const Signup = () => {
     //     setErrorM(message)
     // }
 
-    if (user) {
+    if (token) {
         navigate('/')
         console.log('user Found', user);
         // navigate(from)

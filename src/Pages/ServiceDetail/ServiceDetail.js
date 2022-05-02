@@ -10,7 +10,7 @@ const ServiceDetail = () => {
     const [service, setService] = useState({});
     const [user] = useAuthState(auth);
     useEffect(() => {
-        const url = `http://localhost:5000/service/${serviceId}`;
+        const url = `https://infinite-cliffs-56801.herokuapp.com/service/${serviceId}`;
         fetch(url)
             .then(res => res.json())
             .then(data => setService(data))
@@ -25,7 +25,7 @@ const ServiceDetail = () => {
             address : event.target.address.value,
             phone : event.target.phone.value,
         }
-        axios.post('http://localhost:5000/order', order)
+        axios.post('https://infinite-cliffs-56801.herokuapp.com/order', order)
         .then(response => {
             console.log(response);
             const {data} = response;
